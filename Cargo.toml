@@ -1,0 +1,12 @@
+[package]
+name = "coerce_int96_bug"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# Only datafusion, so the arrow and parquet versions cannot drift from it.
+[dependencies]
+datafusion = "55"
+
+[dev-dependencies]
+tempfile = "3"

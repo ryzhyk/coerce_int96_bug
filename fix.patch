@@ -1,0 +1,32 @@
+--- a/datafusion/datasource-parquet/src/schema_coercion.rs
++++ b/datafusion/datasource-parquet/src/schema_coercion.rs
+@@ -328,7 +328,8 @@
+                         current_field.name(),
+                         processed_children.as_slice(),
+                         current_field.is_nullable(),
+-                    );
++                    )
++                    .with_metadata(current_field.metadata().clone());
+                     parent_fields.borrow_mut().push(Arc::new(processed_struct));
+                 }
+                 (DataType::List(unprocessed_child), None) => {
+@@ -361,7 +362,8 @@
+                         current_field.name(),
+                         Arc::clone(&processed_children[0]),
+                         current_field.is_nullable(),
+-                    );
++                    )
++                    .with_metadata(current_field.metadata().clone());
+                     parent_fields.borrow_mut().push(Arc::new(processed_list));
+                 }
+                 (DataType::Map(unprocessed_child, _), None) => {
+@@ -391,7 +393,8 @@
+                         current_field.name(),
+                         DataType::Map(Arc::clone(&processed_children[0]), *sorted),
+                         current_field.is_nullable(),
+-                    );
++                    )
++                    .with_metadata(current_field.metadata().clone());
+                     parent_fields.borrow_mut().push(Arc::new(processed_map));
+                 }
+                 (DataType::Timestamp(TimeUnit::Nanosecond, None), None)
